@@ -1,18 +1,18 @@
-;;; helm-cider-history.el --- Show cider input history in helm
-
+;;; helm-cider-history.el --- Helm interface for cider history
+;;
 ;; Copyright (C) 2015 Andreas Klein
-
+;;
 ;; Author: Andreas Klein <git@kungi.org>
 ;; URL: https://github.com/Kungi/helm-cider-history
 ;; Created: 19.07.2015
 ;; Keywords: convenience
 ;; Version: 0.0.1
 ;; Package-Requires: ((helm "1.4.0") (cider "0.9.0"))
-
+;;
 ;; This file is NOT part of GNU Emacs.
-
+;;
 ;;; License:
-
+;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 3, or (at your option)
@@ -27,19 +27,21 @@
 ;; along with GNU Emacs; see the file COPYING.  If not, write to the
 ;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 ;; Boston, MA 02110-1301, USA.
-
+;;
+;;; Commentary:
+;;
+;; helm-cider-history integraties cider-input-history with helm
+;;
 ;;; Code:
 
 (require 'helm)
 
-(defvar helm-cider-history-candidates nil)
-
+;;;###autoload
 (defun helm-cider-history ()
+  "Show `cider-input-history` in `helm`."
   (interactive)
-  (setq helm-cider-history-candidates
-        cider-repl-input-history)
   (helm :sources (helm-build-sync-source "Helm Cider History"
-                   :candidates helm-cider-history-candidates
+                   :candidates cider-repl-input-history
                    :action '(("Yank" . (lambda (candidate) (insert candidate))))
                    :persistent-action (lambda (candidate) (ignore))
                    :persistent-help "DoNothing"
